@@ -7,31 +7,28 @@ class Solution:
         if not edges:
             return [0]
         graph = collections.defaultdict(list)
-        cnt = collections.defaultdict(int)
         for v1, v2 in edges:
             graph[v1].append(v2)
             graph[v2].append(v1)
-            cnt[v1] += 1
-            cnt[v2] += 1
 
-        height = 0
+        leaves = []
+        for v in range(n):
+            if len(graph[v]) == 1:
+                leaves.append(v)
 
-        while len(cnt) > 2:
+        while n > 2:
+            n -= len(leaves)
 
-            ones = []
-            for key in graph:
-                if key in cnt and cnt[key] == 1:
-                    ones.append(key)
+            new_leaves = []
+            for leaf in leaves:
+                target = graph[leaf].pop()
+                graph[target].remove(leaf)
+                if len(graph[target]) == 1:
+                    new_leaves.append(target)
 
-            for key in ones:
-                target = graph[key].pop()
-                graph[target].remove(key)
-                cnt.pop(key)
-                cnt[target] -= 1
+            leaves = new_leaves
 
-            height += 1
-
-        return [key for key in cnt]
+        return leaves
 
 
 if __name__ == "__main__":
