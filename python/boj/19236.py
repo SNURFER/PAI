@@ -50,7 +50,7 @@ def solution():
             while dir_cnt < 8:
                 # divide by 9 to rotate 360 degree
                 target_vec = dir_dict[(dir + dir_cnt - 1) % 8 + 1]
-                if 0 <= loc[0] + target_vec[0] < 4 and 0 <= loc[1] + target_vec[1] < 4 and board[loc[0] + target_vec[0]][loc[1] + target_vec[1]][0] > 0:
+                if 0 <= loc[0] + target_vec[0] < 4 and 0 <= loc[1] + target_vec[1] < 4 and board[loc[0] + target_vec[0]][loc[1] + target_vec[1]][0] >= 0:
                     target_pos = [loc[0] + target_vec[0], loc[1] + target_vec[1]]
                     break
                 dir_cnt += 1
@@ -153,19 +153,5 @@ def solution():
 
 
 if __name__ == "__main__":
-    # input = [[7, 6, 2, 3, 15, 6, 9, 8],
-    #          [3, 1, 1, 8, 14, 7, 10, 1],
-    #          [6, 1, 13, 6, 4, 3, 11, 4],
-    #          [16, 1, 8, 7, 5, 2, 12, 2]]
-    #
-    # input = [[16, 7, 1, 4, 4, 3, 12, 8],
-    #          [14, 7, 7, 6, 3, 4, 10, 2],
-    #          [5, 2, 15, 2, 8, 3, 6, 4],
-    #          [11, 8, 2, 4, 13, 5, 9, 4]]
-    #
-    # input = [[16, 7, 1, 4, 4, 3, 12, 8],
-    #          [14, 7, 7, 6, 3, 4, 10, 2],
-    #          [5, 2, 15, 2, 8, 3, 6, 4],
-    #          [11, 8, 2, 4, 13, 5, 9, 4]]
 
     print(solution())
