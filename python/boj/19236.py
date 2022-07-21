@@ -2,7 +2,7 @@ import heapq
 from typing import List
 
 
-def solution(input):
+def solution():
     # dictionary for direction vector
     dir_dict = {
         1: [-1, 0],
@@ -17,8 +17,6 @@ def solution(input):
     max_sum = 0
 
     def getEatableList(row: int, col: int, dir: int, board: List[List[List[int]]]) -> List[List[int]]:
-        if dir == 0:
-            print("dir is zero")
         dir_vec = dir_dict[dir]
         row += dir_vec[0]
         col += dir_vec[1]
@@ -38,12 +36,13 @@ def solution(input):
         for _ in range(q_size):
             fish_info = num_queue.pop(0)
             loc = fish_info[2: 4]
-            dir = fish_info[1]
+            dir = board[loc[0]][loc[1]][1]
             val = fish_info[0]
 
             # if temporal moved history exists, update location
             if temporal_move.get(val):
                 loc = temporal_move[val][0: 2]
+                dir = board[loc[0]][loc[1]][1]
                 temporal_move.pop(val)
 
             dir_cnt = 0
@@ -59,6 +58,8 @@ def solution(input):
             # if fish can't move
             if dir_cnt == 8:
                 target_pos = loc
+            else:
+                board[loc[0]][loc[1]][1] = (dir + dir_cnt - 1) % 8 + 1
 
             # swap
             board[loc[0]][loc[1]], board[target_pos[0]][target_pos[1]] = \
@@ -73,6 +74,11 @@ def solution(input):
                 fish[2] = temporal_move.get(fish[0])[0]
                 fish[3] = temporal_move.get(fish[0])[1]
 
+    def deep_copy_r(v):
+        if isinstance(v, list):
+            return [deep_copy_r(e) for e in v]
+        return v
+
     def dfs(board: List[List[List[int]]], num_queue: List[List[int]], sum_fish: int, shark_pos: List[int]):
         # step0: delete shark_pos in queue
         for _ in range(len(num_queue)):
@@ -81,6 +87,7 @@ def solution(input):
                 num_queue.append(fish_info)
 
         # step1: move all fish between #1 ~ #16 for once
+        # clone_board = deep_copy_r(board)
         moveAllFish(board, num_queue, {})
 
         # return if there is nothing to eat
@@ -93,20 +100,22 @@ def solution(input):
 
         # for loop eatable fish in shark pos
         for fish in fish_list:
+            clone_board = deep_copy_r(board)
+
             next_shark_pos = fish
-            fish_val = board[fish[0]][fish[1]][0]
+            fish_val = clone_board[fish[0]][fish[1]][0]
             sum_fish += fish_val
-            board[shark_pos[0]][shark_pos[1]][0] = 0
-            board[next_shark_pos[0]][next_shark_pos[1]][0] = -1
+            clone_board[shark_pos[0]][shark_pos[1]][0] = 0
+            clone_board[next_shark_pos[0]][next_shark_pos[1]][0] = -1
 
-            dfs(board, num_queue, sum_fish, next_shark_pos)
+            clone_num_queue = deep_copy_r(num_queue)
+            dfs(clone_board, clone_num_queue, sum_fish, next_shark_pos)
+            sum_fish -= fish_val
 
-            board[shark_pos[0]][shark_pos[1]][0] = -1
-            board[next_shark_pos[0]][next_shark_pos[1]][0] = fish_val
 
     # setting data input
-    # data = [list(map(int, input().split())) for _ in range(4)]
-    data = input
+    data = [list(map(int, input().split())) for _ in range(4)]
+    # data = input
 
     # tuning input
     # board[a][b] is pair of [value, direction] of position a, b and we will call fish_info
@@ -144,8 +153,19 @@ def solution(input):
 
 
 if __name__ == "__main__":
-    input = [[7, 6, 2, 3, 15, 6, 9, 8],
-             [3, 1, 1, 8, 14, 7, 10, 1],
-             [6, 1, 13, 6, 4, 3, 11, 4],
-             [16, 1, 8, 7, 5, 2, 12, 2]]
-    print(solution(input))
+    # input = [[7, 6, 2, 3, 15, 6, 9, 8],
+    #          [3, 1, 1, 8, 14, 7, 10, 1],
+    #          [6, 1, 13, 6, 4, 3, 11, 4],
+    #          [16, 1, 8, 7, 5, 2, 12, 2]]
+    #
+    # input = [[16, 7, 1, 4, 4, 3, 12, 8],
+    #          [14, 7, 7, 6, 3, 4, 10, 2],
+    #          [5, 2, 15, 2, 8, 3, 6, 4],
+    #          [11, 8, 2, 4, 13, 5, 9, 4]]
+    #
+    # input = [[16, 7, 1, 4, 4, 3, 12, 8],
+    #          [14, 7, 7, 6, 3, 4, 10, 2],
+    #          [5, 2, 15, 2, 8, 3, 6, 4],
+    #          [11, 8, 2, 4, 13, 5, 9, 4]]
+
+    print(solution())
