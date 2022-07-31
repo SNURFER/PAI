@@ -37,7 +37,7 @@ class Heap:
                 high_priority_idx = left_idx
 
         if right_idx < self.length():
-            if self.heap_items[root_idx] > self.heap_items[right_idx]:
+            if self.heap_items[high_priority_idx] > self.heap_items[right_idx]:
                 high_priority_idx = right_idx
 
         if high_priority_idx is not root_idx:
