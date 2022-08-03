@@ -27,16 +27,17 @@ class Solution:
             max_cur = node.val
             # left is not none
             if min_left >= 0:
-                self.max_v = max(abs(node.val - min_left), abs(node.val - max_left))
+                self.max_v = max(abs(node.val - min_left), abs(node.val - max_left), self.max_v)
                 min_cur = min(min_left, node.val)
-                max_cur = min(max_left, node.val)
+                max_cur = max(max_left, node.val)
 
             # right is not none
             if min_right >= 0:
-                self.max_v = max(abs(node.val - min_right), abs(node.val - max_right))
+                self.max_v = max(abs(node.val - min_right), abs(node.val - max_right), self.max_v)
                 min_cur = min(min_right, min_cur)
-                max_cur = min(max_right, node.val)
+                max_cur = max(max_right, max_cur)
 
+            print(min_cur, max_cur)
             return min_cur, max_cur
 
         post_order(root)
