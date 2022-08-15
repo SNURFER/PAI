@@ -1,0 +1,3 @@
+/Users/isido/Documents/projects/Python/PAI/cpp/bj/cmake-build-debug/CMakeFiles/bj.dir
+/Users/isido/Documents/projects/Python/PAI/cpp/bj/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/isido/Documents/projects/Python/PAI/cpp/bj/cmake-build-debug/CMakeFiles/rebuild_cache.dir
