@@ -1,21 +1,34 @@
-#include <string>
 #include <iostream>
+#include <stack>
+#include <algorithm>
 
 class Solution {
 public:
     int maxDepth(std::string s) {
+        std::stack<char> chStack;
+
+        int depthCount = 0;
+        int maxCount = 0;
+
         for (auto& ch : s) {
-            std::cout << ch << std::endl;
+            if (ch == '(') {
+                chStack.push(ch);
+                depthCount += 1;
+                maxCount = std::max(maxCount, depthCount);
+            } else if (ch == ')') {
+                depthCount -= 1;
+                chStack.pop();
+            }
         }
 
-        return 0;
+        return maxCount;
     }
 };
 
 int main() {
     std::string s = "(1)+((2))+(((3)))";
     Solution solution;
-    solution.maxDepth(s);
+    std::cout << solution.maxDepth(s) << std::endl;
 
     return 0;
 }
