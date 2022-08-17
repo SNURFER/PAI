@@ -4,4 +4,4 @@ project(leetcode)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(test
-        1614.cpp)
+        1282.cpp)
