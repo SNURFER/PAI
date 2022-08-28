@@ -14,10 +14,10 @@ def solution():
 
     lis = 0
     for i in range(1, n + 1):
-        dp[i] = 1
+        dp[i] = 0
         for j in range(0, i):
-            if nums[j] < nums[i] and dp[i] < dp[j] + 1:
-                dp[i] += 1
+            if nums[j] < nums[i]:
+                dp[i] = max(dp[j] + 1, dp[i])
 
         lis = max(lis, dp[i])
 
