@@ -1,0 +1,28 @@
+import sys
+from typing import List
+
+input = sys.stdin.readline
+
+
+def solution():
+    n: int = int(input());
+    nums: List[int] = [0]
+    dp: List[int] = [0] * (n + 1)
+
+    for _ in range(n):
+        nums.append(int(input()))
+
+    lis = 0
+    for i in range(1, n + 1):
+        dp[i] = 1
+        for j in range(0, i):
+            if nums[j] < nums[i] and dp[i] < dp[j] + 1:
+                dp[i] += 1
+
+        lis = max(lis, dp[i])
+
+    return n - lis
+
+
+if __name__ == "__main__":
+    print(solution())
