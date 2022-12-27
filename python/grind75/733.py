@@ -6,27 +6,23 @@ class Solution:
         width = len(image[0])
         visit = [[False] * width for _ in range(height)]
         target_color = image[sr][sc]
-        image[sr][sc] = color
 
-        def dfs(row: int, col: int, image: List[List[int]], visit: List[List[int]]):
-            if 0 <= col + 1 < width and visit[row][col + 1] is False and image[row][col + 1] is target_color:
-                visit[row][col + 1] = True
-                image[row][col + 1] = color
-                dfs(row, col + 1, image, visit)
-            if 0 <= col - 1 < width and visit[row][col - 1] is False and image[row][col - 1] is target_color:
-                visit[row][col - 1] = True
-                image[row][col - 1] = color
-                dfs(row, col - 1, image, visit)
-            if 0 <= row + 1 < height and visit[row + 1][col] is False and image[row + 1][col] is target_color:
-                visit[row + 1][col] = True
-                image[row + 1][col] = color
-                dfs(row + 1, col, image, visit)
-            if 0 <= row - 1 < width and visit[row - 1][col] is False and image[row - 1][col] is target_color:
-                visit[row - 1][col] = True
-                image[row - 1][col] = color
-                dfs(row - 1, col, image, visit)
+        def dfs(row: int, col: int):
+            if not (0 <= row < height) or not (0 <= col < width):
+                return
 
-        dfs(sr, sc, image, visit)
+            if visit[row][col] is True:
+                return
+
+            if image[row][col] is target_color:
+                visit[row][col] = True
+                image[row][col] = color
+                dfs(row, col + 1)
+                dfs(row, col - 1)
+                dfs(row + 1, col)
+                dfs(row - 1, col)
+
+        dfs(sr, sc)
 
         return image
 
