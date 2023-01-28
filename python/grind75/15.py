@@ -3,22 +3,27 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        triplets = []
+        nums.sort()
+        triplet = []
         length = len(nums)
+        for l in range(length):
+            m = l + 1
+            r = length - 1
 
-        def dfs(idx: int, triplet: List[int]):
-            if len(triplet) == 3:
-                if sum(triplet) == 0:
-                    triplets.append(sorted(triplet))
-                return
+            target = -nums[l]
 
-            for i in range(idx + 1, length):
-                dfs(i, triplet + [nums[i]])
+            while m < r:
+                if nums[m] + nums[r] > target:
+                    r = r - 1
+                elif nums[m] + nums[r] < target:
+                    m = m + 1
+                else:
+                    if [nums[l], nums[m], nums[r]] not in triplet:
+                        triplet.append([nums[l], nums[m], nums[r]])
+                    m = m + 1
+                    r = r - 1
 
-        for i in range(length - 2):
-            dfs(i, [nums[i]])
-
-        return list(set(list(map(tuple, triplets))))
+        return triplet
 
 
 if __name__ == "__main__":
