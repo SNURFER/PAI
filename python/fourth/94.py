@@ -24,6 +24,7 @@ class Solution:
 
 
 if __name__ == "__main__":
+
     node1 = TreeNode(1)
     node2 = TreeNode(2)
     node3 = TreeNode(3)
