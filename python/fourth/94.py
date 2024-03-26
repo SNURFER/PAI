@@ -22,6 +22,25 @@ class Solution:
             self.val_arr.append(root.val)
             self.inorder_impl(root.right)
 
+class Solution2:
+
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        val_arr: List[int] = []
+        inorder_stack = []
+
+        head = root
+
+        while head is not None or len(inorder_stack) > 0:
+            while head is not None:
+                inorder_stack.append(head)
+                head = head.left
+
+            head = inorder_stack.pop()
+            val_arr.append(head.val)
+            head = head.right
+
+        return val_arr
+
 
 if __name__ == "__main__":
 
@@ -36,6 +55,6 @@ if __name__ == "__main__":
     node2.right = node4
     node4.right = node5
 
-    solution = Solution()
+    solution = Solution2()
     ret_node: List[int] = solution.inorderTraversal(node1)
     print(ret_node)
