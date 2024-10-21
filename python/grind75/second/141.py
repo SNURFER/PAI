@@ -9,28 +9,19 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        pos: int = -1
-
-        if not head:
+        if not head or not head.next:
             return False
 
         slow_ptr: ListNode = head
+        fast_ptr: ListNode = head
 
-        if not head.next:
-            return False
-
-        fast_ptr: ListNode = head.next
-
-        loop_ctr: int = -1
         while slow_ptr and fast_ptr and fast_ptr.next:
-            loop_ctr += 1
             slow_ptr = slow_ptr.next
             fast_ptr = fast_ptr.next.next
             if slow_ptr == fast_ptr:
-                pos = loop_ctr
-                break
+                return True
 
-        return False if pos == -1 else True
+        return False
 
 
 if __name__ == "__main__":
